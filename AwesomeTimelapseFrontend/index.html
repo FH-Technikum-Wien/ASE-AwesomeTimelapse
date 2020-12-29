@@ -2,8 +2,23 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="camera.js"></script>
     </head>
     <body>
-        <h1>
+        <h1>ASE Übung 3 - Awesome Timelapse</h1>
+        <h3>Bittner, Leithner, Panagiotopulos</h3>
+        <div id="warnNoDevice">
+            No camera device found or browser is not supported!
+        </div>
+        <div id="divDevice" style="display: none">
+            <video id="video" width="640" height="480" autoplay></video>
+            <button id="btnSnap">take photo</button>
+            <div id="divImg" style="display: none">
+                <canvas id="canvas" width="640" height="480"></canvas>
+                <button id="btnUpload">upload</button>
+                <video id="response" width="640" height="480" autoplay></video>
+            </div>
+        </div>
     </body>
 </html>
