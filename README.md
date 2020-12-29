@@ -1,9 +1,11 @@
 # ASE-AwesomeTimelapse
 Small project using CI and CD Workflow
 
-## Manual Server Setup
-Note: This will be replaced by a Dockerfile later.
+## REST API
+### Docker Setup
+In `AwesomeTimelapseREST`, run `docker-compose up --build -d`.
 
+### Manual Setup
 In `AwesomeTimelapseREST`, run:
 
 ```
