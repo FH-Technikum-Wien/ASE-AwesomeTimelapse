@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: always
+    env_file:
+      - project.env
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  api:
+    container_name: django
+    build: ./
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - project.env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - upload-data:/code/upload/
+volumes:
+  upload-data:
+  postgres-data:
