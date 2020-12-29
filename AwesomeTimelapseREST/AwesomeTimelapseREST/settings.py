@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Media
+MEDIA_ROOT = 'upload/'    
+MEDIA_URL = '/127.0.0.1:8000/upload/'  
+
 
 # Application definition
 
