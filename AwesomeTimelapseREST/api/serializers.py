@@ -6,7 +6,7 @@ from .models import Image, Video
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
-        fields = ('id', 'name', 'data')
+        fields = ('id', 'data')
 
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):

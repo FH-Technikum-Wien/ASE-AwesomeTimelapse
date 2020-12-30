@@ -5,13 +5,8 @@ Small project using CI and CD Workflow
 ### Docker Setup
 In `AwesomeTimelapseREST`, run `docker-compose up --build -d`.
 
-### Manual Setup
-In `AwesomeTimelapseREST`, run:
+Get the IP of that server: `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' django`
 
-```
-pip3 install -r requirements.txt
-python3 manage.py migrate
-python3 manage.py runserver
-```
+## Communication
 
-The server is now available at http://127.0.0.1:8000. The web-UI is pretty self-explanatory and can be used for testing GET and POST requests. 
+![](communication_graph.png)
