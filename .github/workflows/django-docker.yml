@@ -1,0 +1,25 @@
+name: REST API Docker Setup
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    
+    env:
+      working-directory: AwesomeTimelapseREST
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Dockerfile
+      run: docker build .
+      working-directory: ${{env.working-directory}}
+    - name: Run docker-compose
+      run: docker-compose up -d
+      working-directory: ${{env.working-directory}}
