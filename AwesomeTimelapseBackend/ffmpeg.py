@@ -33,7 +33,7 @@ def createVideo(imagePath, outputPath):
         return True
 
 def appendToVideo(videoPath, imagePath, outputPath):
-command = ('ffmpeg' +                                                                               # Using ffmpeg
+    command = ('ffmpeg' +                                                                           # Using ffmpeg
                 f' -i ./{videoPath}' +                                                              # Video to append image to
                 ' -f image2' +                                                                      # Demuxer type for image to append
                 ' -loop 1' +                                                                        # Loop image to create video
