@@ -10,8 +10,8 @@ import ffmpeg, constants
 
 def main():
     # Create needed folders if non-existing
-    if not os.path.exists("temp"):
-        os.mkdir("temp")
+    if not os.path.exists(constants.TEMP_FOLDER):
+        os.mkdir(constants.TEMP_FOLDER)
     if not os.path.exists(constants.IMAGE_FOLDER):
         os.mkdir(constants.IMAGE_FOLDER)
     if not os.path.exists(constants.VIDEO_FOLDER):
@@ -23,7 +23,7 @@ def main():
     channel = connection.channel()
     # Create queue for receiving messages. Needs to be used by the sender.
     channel.queue_declare(queue=constants.QUEUE_NAME)
-    print(" [*] Waiting for messages.")
+    print("[*] Waiting for messages.")
 
     # Define from which queue we should receive callbacks
     channel.basic_consume(queue=constants.QUEUE_NAME, on_message_callback=callback, auto_ack=True)
@@ -44,7 +44,7 @@ def callback(ch, method, properties, body):
 
     imagePath = constants.IMAGE_FOLDER + (os.listdir(constants.IMAGE_FOLDER)[0])
     outputPath = constants.OUTPUT_FOLDER + videoFile
-
+    # Either append to video or create a new video
     if videoDownloaded:
         print("[*] Appending to video...")
         videoPath = constants.VIDEO_FOLDER + videoFile
@@ -52,19 +52,16 @@ def callback(ch, method, properties, body):
     else:
         print("[*] Creating video...")
         success = ffmpeg.createVideo(imagePath, outputPath)
-    
-    # Send acknowledgement of completion.
-    #ch.basic_ack(delivery_tag = method.delivery_tag)
 
     if not success:
-        print("Couldn't generate video!\n")
+        print("[X] Couldn't generate video!\n")
         exit(1)
 
     # Upload video to API
     success = updateVideo(videoFile, videoID, videoName)
 
     if not success:
-        print("Couldn't update file in API!\n")
+        print("[X] Couldn't update file in API!\n")
         exit(1)    
 
     # Empty temp folders after completion
@@ -74,8 +71,8 @@ def callback(ch, method, properties, body):
     os.mkdir(constants.VIDEO_FOLDER)
     os.mkdir(constants.OUTPUT_FOLDER)
 
-    print("Completed!\n")
-    print(" [*] Waiting for messages.")            
+    print("[>] Completed!\n")
+    print("[*] Waiting for messages.")            
 
 def downloadImage(imageID):
     """ Downloads the image with the given ID to the 'temp/images' folder. 
@@ -125,8 +122,6 @@ def updateVideo(videoFile, videoID, videoName):
     payload = {constants.VIDEO_PROPERTY_NAME: videoName}
     videoUrl = constants.VIDEO_ADDRESS + videoID + "/"
     response = requests.request("PUT", videoUrl, files=files, data=payload)
-    print(response.text)
-    print(response.status_code)
     return response.status_code == 200
 
 
@@ -134,7 +129,7 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print('Interrupted')
+        print('[X] Interrupted!')
         try:
             sys.exit(0)
         except SystemExit:
