@@ -1,0 +1,9 @@
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    ports:
+      - 5672:5672
+    environment: 
+      RABBITMQ_ERLANG_COOKIE: "secret-cookie"
