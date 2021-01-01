@@ -43,6 +43,7 @@ services:
     command: python vb_worker.py
     depends_on:
       - rabbitmq
+      - api
     links:
       - "rabbitmq:queue"
 

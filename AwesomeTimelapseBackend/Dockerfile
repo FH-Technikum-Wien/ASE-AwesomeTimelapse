@@ -15,10 +15,17 @@ WORKDIR /code
 # Copy the requirements.txt file.
 COPY ./requirements.txt /code/
 
+# Install the ffmpeg.
+RUN apt-get update
+RUN apt-get install ffmpeg -y
+RUN apt autoremove
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
 # Install the requirements.
 RUN pip install -r requirements.txt
 
+
 # Copy the rest of the code.
 COPY . /code/
-
-#ENTRYPOINT ["python", "/code/vb_worker.py"]

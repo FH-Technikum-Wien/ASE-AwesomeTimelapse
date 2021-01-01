@@ -46,11 +46,11 @@ def callback(ch, method, properties, body):
     outputPath = constants.OUTPUT_FOLDER + videoFile
     # Either append to video or create a new video
     if videoDownloaded:
-        print("[*] Appending to video...")
+        print("[.] Appending to video...")
         videoPath = constants.VIDEO_FOLDER + videoFile
         success = ffmpeg.appendToVideo(videoPath, imagePath, outputPath)
     else:
-        print("[*] Creating video...")
+        print("[.] Creating video...")
         success = ffmpeg.createVideo(imagePath, outputPath)
 
     if not success:
@@ -71,8 +71,8 @@ def callback(ch, method, properties, body):
     os.mkdir(constants.VIDEO_FOLDER)
     os.mkdir(constants.OUTPUT_FOLDER)
 
-    print("[>] Completed!\n")
-    print("[*] Waiting for messages.")            
+    print("[->] Completed!\n")
+    print("[*] Waiting for messages...")            
 
 def downloadImage(imageID):
     """ Downloads the image with the given ID to the 'temp/images' folder. 

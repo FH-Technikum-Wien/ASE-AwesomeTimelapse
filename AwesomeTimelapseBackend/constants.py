@@ -10,8 +10,9 @@ IMAGE_FOLDER = "temp/image/"
 VIDEO_FOLDER = "temp/video/"
 OUTPUT_FOLDER = "temp/output/"
 
-IMAGE_ADDRESS = "http://localhost:8000/images/"
-VIDEO_ADDRESS = "http://localhost:8000/videos/"
+API_CONTAINER_NAME = "django"
+IMAGE_ADDRESS = f"http://{API_CONTAINER_NAME}:8000/images/"
+VIDEO_ADDRESS = f"http://{API_CONTAINER_NAME}:8000/videos/"
 
 IMAGE_PROPERTY_DATA = "data"
 
