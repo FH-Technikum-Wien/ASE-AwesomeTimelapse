@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      main-directory: ASE-AwesomeTimelapse
       rest-directory: AwesomeTimelapseREST
       backend-directory: AwesomeTimelapseBackend
 
@@ -27,4 +26,3 @@ jobs:
       working-directory: ${{env.backend-directory}}
     - name: Run docker-compose
       run: docker-compose up -d
-      working-directory: ${{env.main-directory}}
