@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 QUEUE_NAME = "worker_queue"
-HOST_NAME = "localhost"
+HOST_NAME = "rabbitmq"
 REQUEST_SEPARATOR = '-'
 
 TEMP_FOLDER = "temp/"
