@@ -6,8 +6,7 @@ import constants
 
 def createVideo(imagePath, outputPath):
     """
-    Creates a (new) video file from the given images with the given framerate and resolution.
-    The inputPath should point to a directory with multiple images.
+    Creates a new video from the given image and saves it in the given outputPath.
     """
     command = ('ffmpeg' +                                                                       # Using ffmpeg
                 ' -f image2' +                                                                  # Demuxer type (image2 -> Image file demuxer)
@@ -33,6 +32,9 @@ def createVideo(imagePath, outputPath):
         return True
 
 def appendToVideo(videoPath, imagePath, outputPath):
+    """
+    Extends the given video with the given image and saves the resulting video in the given outputhPath.
+    """
     command = ('ffmpeg' +                                                                           # Using ffmpeg
                 f' -i ./{videoPath}' +                                                              # Video to append image to
                 ' -f image2' +                                                                      # Demuxer type for image to append
