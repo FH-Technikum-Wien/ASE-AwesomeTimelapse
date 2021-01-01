@@ -2,6 +2,7 @@
 
 QUEUE_NAME = "worker_queue"
 HOST_NAME = "rabbitmq"
+HOST_PORT = 5672
 REQUEST_SEPARATOR = '-'
 
 TEMP_FOLDER = "temp/"

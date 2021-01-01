@@ -19,7 +19,7 @@ def main():
     if not os.path.exists(constants.OUTPUT_FOLDER):
         os.mkdir(constants.OUTPUT_FOLDER)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME, port=constants.HOST_PORT))
     channel = connection.channel()
     # Create queue for receiving messages. Needs to be used by the sender.
     channel.queue_declare(queue=constants.QUEUE_NAME)
