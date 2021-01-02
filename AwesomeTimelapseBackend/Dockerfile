@@ -18,6 +18,7 @@ COPY ./requirements.txt /code/
 # Install the ffmpeg.
 RUN apt-get update
 RUN apt-get install ffmpeg -y
+RUN apt-get install libx264-dev -y
 RUN apt autoremove
 
 # Upgrade pip
