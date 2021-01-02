@@ -26,4 +26,3 @@ jobs:
       working-directory: ${{env.backend-directory}}
     - name: Run docker-compose
       run: docker-compose up -d
-      working-directory: ../
