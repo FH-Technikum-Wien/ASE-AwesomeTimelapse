@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# TODO: REMOVE FILE FOR RELEASE
+
 import pika
 import constants
 import sys

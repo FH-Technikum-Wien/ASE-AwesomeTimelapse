@@ -19,9 +19,10 @@ def main():
     if not os.path.exists(constants.OUTPUT_FOLDER):
         os.mkdir(constants.OUTPUT_FOLDER)
 
+    # Connect to RabbitMQ
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME, port=constants.HOST_PORT))
     channel = connection.channel()
-    # Create queue for receiving messages. Needs to be used by the sender.
+    # Create queue for receiving messages. Needs to be the same used by the sender.
     channel.queue_declare(queue=constants.QUEUE_NAME)
     print("[*] Waiting for messages.")
 
@@ -31,6 +32,7 @@ def main():
 
 
 def callback(ch, method, properties, body):
+    # Split received message to image and video ID
     message = str(body.decode()).split(constants.REQUEST_SEPARATOR)
     imageID = message[0]
     videoID = message[1]
@@ -44,6 +46,7 @@ def callback(ch, method, properties, body):
 
     imagePath = constants.IMAGE_FOLDER + (os.listdir(constants.IMAGE_FOLDER)[0])
     outputPath = constants.OUTPUT_FOLDER + videoFile
+    
     # Either append to video or create a new video
     if videoDownloaded:
         print("[.] Appending to video...")
@@ -79,7 +82,6 @@ def downloadImage(imageID):
     Arguments:
     imageID -- The ID of the image in the API (>0)     
     """
-
     # Get image obj from API
     response = requests.get(constants.IMAGE_ADDRESS + imageID)
     # Extract needed data (link to image)
