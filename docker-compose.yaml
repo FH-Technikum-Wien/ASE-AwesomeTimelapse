@@ -16,7 +16,7 @@ services:
   ### REST API
   api:
     container_name: django
-    build: ./AwesometimelapseREST
+    build: AwesometimelapseREST
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
       - project.env
@@ -39,7 +39,7 @@ services:
   ### BACKEND WORKER
   worker:
     container_name: videoBuilderWorker
-    build: ./AwesometimelapseBackend
+    build: AwesometimelapseBackend
     command: python vb_worker.py
     depends_on:
       - rabbitmq
