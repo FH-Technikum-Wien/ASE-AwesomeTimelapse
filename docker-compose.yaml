@@ -27,6 +27,18 @@ services:
     volumes:
       - upload-data:/code/upload/
 
+  ### FRONTEND
+  frontend:
+    container_name: nodejs
+    build: AwesomeTimelapseFrontend
+    ports:
+      - 8080:8080
+    depends_on:
+      - rabbitmq
+      - api
+    links:
+      - "rabbitmq:queue"
+
   ### QUEUE
   rabbitmq:
     container_name: rabbitmq
