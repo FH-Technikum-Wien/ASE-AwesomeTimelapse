@@ -27,10 +27,17 @@ window.onload = function () {
         document.getElementById("btnSnap").addEventListener("click", function() {
             takePhoto(context, video);
         });
-        
+
         // button to upload image on server
-        document.getElementById("btnUpload").addEventListener("click", function() {
+        var btnUpload = document.getElementById("btnUpload");
+        btnUpload.addEventListener("click", function() {
             convertCanvasToImage(canvas);
+        });
+
+        // input for video name
+        var textVideo = document.getElementById("txtVideo");
+        textVideo.addEventListener("input", function() {
+            btnUpload.disabled = (textVideo.value.length < 1)
         });
     }
     else
