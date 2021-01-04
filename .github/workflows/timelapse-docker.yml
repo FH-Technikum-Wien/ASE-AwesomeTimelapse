@@ -1,0 +1,28 @@
+name: Complete Docker Setup
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    
+    env:
+      rest-directory: AwesomeTimelapseREST
+      backend-directory: AwesomeTimelapseBackend
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the REST-Dockerfile
+      run: docker build .
+      working-directory: ${{env.rest-directory}}
+    - name: Build the Backend-Dockerfile
+      run: docker build .
+      working-directory: ${{env.backend-directory}}
+    - name: Run docker-compose
+      run: docker-compose up -d
