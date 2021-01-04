@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+  ### REST API DATABASE
   db:
     container_name: postgresdb
     image: postgres:latest
@@ -12,9 +13,10 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  ### REST API
   api:
     container_name: django
-    build: ./
+    build: AwesomeTimelapseREST
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
       - project.env
@@ -24,6 +26,28 @@ services:
       - db
     volumes:
       - upload-data:/code/upload/
+
+  ### QUEUE
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+    environment: 
+      RABBITMQ_ERLANG_COOKIE: "very-very-secret-cookie"
+
+  ### BACKEND WORKER
+  worker:
+    container_name: videoBuilderWorker
+    build: AwesomeTimelapseBackend
+    command: python vb_worker.py
+    depends_on:
+      - rabbitmq
+      - api
+    links:
+      - "rabbitmq:queue"
+
+
 volumes:
   upload-data:
   postgres-data:
