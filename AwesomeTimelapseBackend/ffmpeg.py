@@ -14,7 +14,8 @@ def createVideo(imagePath, outputPath):
                 f' -t {constants.VIDEO_IMAGE_DURATION}' +                                       # Sets duration of the image
                 f' -i ./{imagePath}' +                                                          # Path to the images
                 ' -c:v libx264' +                                                               # Better encoder than default
-                ' -crf 0' +                                                                     # Constant rate factor (0-51 with 23 being default and 0 being lossless)
+                ' -crf 1' +                                                                     # Constant rate factor (0-51 with 23 being default and 0 being lossless)
+                ' -pix_fmt yuv420p' +                                                           # Required for some browsers (e.g. Firefox - Doesn't work with ffmpeg's default)
                 f' -vf "scale={constants.VIDEO_WIDTH}:{constants.VIDEO_HEIGHT}:' +              # Sets the input dimension (needed for padding)
                 'force_original_aspect_ratio=1,' +                                              # Forces original aspect ratio of image (requires padding)
                 f'pad={constants.VIDEO_WIDTH}:{constants.VIDEO_HEIGHT}:(ow-iw)/2:(oh-ih)/2"' +  # Pads the video to fit 1920x1080 with black borders
@@ -42,7 +43,8 @@ def appendToVideo(videoPath, imagePath, outputPath):
                 f' -t {constants.VIDEO_IMAGE_DURATION}' +                                           # Duration of image as video
                 f' -i ./{imagePath}' +                                                              # Image to append
                 ' -c:v libx264' +                                                                   # Encoder for image to video
-                ' -crf 0' +                                                                         # Lossless
+                ' -crf 1' +                                                                         # Near-Lossless
+                ' -pix_fmt yuv420p' +                                                               # Required for some browsers (e.g. Firefox - Doesn't work with ffmpeg's default)
                 f' -filter_complex "' +                                                             # Filter for appending
                     f'[0]scale={constants.VIDEO_WIDTH}:{constants.VIDEO_HEIGHT}:' +                 # Set scale for video
                     'force_original_aspect_ratio=decrease,' +                                       # Force aspect ratio to decrease
