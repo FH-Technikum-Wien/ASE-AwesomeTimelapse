@@ -19,3 +19,4 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "node", "frontend.js" ]
+#CMD [ "node", "test.js" ]

@@ -3,19 +3,13 @@
   "version": "1.0.0",
   "description": "ASE uebung3",
   "author": "Bittner, Leithner, Panagiotopulos",
-  "// license": "MIT",
   "main": "frontend.js",
   "scripts": {
     "start": "node frontend.js"
   },
-  "// keywords": [
-    "nodejs",
-    "bootstrap",
-    "express"
-  ],
   "dependencies": {
     "express": "^4.16.4",
-    "cors": "^2.8.5",
-    "axios": "^0.21.1"
+    "unirest":"^0.6.0",
+    "amqplib":"^0.6.0"
   }
 }
