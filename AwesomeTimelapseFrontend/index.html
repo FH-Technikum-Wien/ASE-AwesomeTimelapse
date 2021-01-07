@@ -11,13 +11,19 @@
         <div id="warnNoDevice">
             No camera device found or browser is not supported!
         </div>
+        <!-- <button id="test">test</button> -->
         <div id="divDevice" style="display: none">
             <video id="video" width="640" height="480" autoplay></video>
             <button id="btnSnap">take photo</button>
             <div id="divImg" style="display: none">
                 <canvas id="canvas" width="640" height="480"></canvas>
-                <button id="btnUpload">upload</button>
-                <video id="response" width="640" height="480" autoplay></video>
+                <label>Video name:</label>
+                <input id="txtVideo">
+                <button id="btnUpload" disabled>upload</button>
+                <div id="divVideo" style="display: none">
+                    Your data is beeing processed...
+                    <a href="/video">check your new video here</a>
+                </div>
             </div>
         </div>
     </body>

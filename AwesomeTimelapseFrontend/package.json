@@ -1,0 +1,15 @@
+{
+  "name": "AwesomeTimelapse",
+  "version": "1.0.0",
+  "description": "ASE uebung3",
+  "author": "Bittner, Leithner, Panagiotopulos",
+  "main": "frontend.js",
+  "scripts": {
+    "start": "node frontend.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "unirest":"^0.6.0",
+    "amqplib":"^0.6.0"
+  }
+}
