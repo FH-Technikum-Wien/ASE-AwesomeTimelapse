@@ -20,7 +20,7 @@ var rabbitmqChannel = null;
 var lastVideoId = 0; // TODO: evaluate from xmlhttp request per name
 
 app.use(express.static(path)); // allows serving static files
-app.use(express.json()); // to support JSON-encoded bodies
+app.use(express.json({ limit: '10mb' })); // to support JSON-encoded bodies, limit to prevent error 413: Payload too large
 //app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 
 /* not needed if static files are allowed
