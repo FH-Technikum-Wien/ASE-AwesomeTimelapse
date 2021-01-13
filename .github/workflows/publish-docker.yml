@@ -1,0 +1,33 @@
+name: Publish to Docker Hub
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      frontend-directory: AwesomeTimelapseFrontend
+      rest-directory: AwesomeTimelapseREST
+      backend-directory: AwesomeTimelapseBackend
+      version: 0.1
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Frontend-Dockerfile
+      run: docker build . -t ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_frontend:${{env.version}}
+      working-directory: ${{env.frontend-directory}}
+    - name: Build the REST-Dockerfile
+      run: docker build . -t ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_api:${{env.version}}
+      working-directory: ${{env.rest-directory}}
+    - name: Build the Backend-Dockerfile
+      run: docker build . -t ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_worker:${{env.version}}
+      working-directory: ${{env.backend-directory}}
+    - name: Login to Docker Hub
+      run: echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_USER}} --password-stdin
+    - name: Push the Docker Images
+      run: docker push ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_api:${{env.version}} && docker push ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_worker:${{env.version}} && docker push ${{ secrets.DOCKER_USER}}/ase-awesometimelapse_frontend:${{env.version}}
