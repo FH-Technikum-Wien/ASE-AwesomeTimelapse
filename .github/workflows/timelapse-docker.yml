@@ -1,4 +1,4 @@
-name: Complete Docker Setup
+name: Test Application via Docker Build and Compose
 
 on:
   push:
