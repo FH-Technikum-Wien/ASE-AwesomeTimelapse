@@ -5,23 +5,27 @@
         <link rel="stylesheet" href="style.css" />
         <script src="camera.js"></script>
     </head>
-    <body>
+    <body width="1920" height="1080">
         <h1>ASE Übung 3 - Awesome Timelapse</h1>
         <h3>Bittner, Leithner, Panagiotopulos</h3>
         <div id="warnNoDevice">
-            No camera device found or browser is not supported!
+            <label>No camera device found or browser is not supported!</label>
         </div>
         <!-- <button id="test">test</button> -->
         <div id="divDevice" style="display: none">
             <video id="video" width="640" height="480" autoplay></video>
+            </br>
             <button id="btnSnap">take photo</button>
             <div id="divImg" style="display: none">
                 <canvas id="canvas" width="640" height="480"></canvas>
+                </br>
                 <label>Video name:</label>
                 <input id="txtVideo">
                 <button id="btnUpload" disabled>upload</button>
                 <div id="divVideo" style="display: none">
-                    Your data is beeing processed...
+                    </br>
+                    <label>Your data is beeing processed...</label>
+                    </br>
                     <a href="/video">check your new video here</a>
                 </div>
             </div>
