@@ -26,8 +26,8 @@ DEBUG = True
 ALLOWED_HOSTS=['*']
 
 # Media
-MEDIA_ROOT = 'upload/'    
-MEDIA_URL = 'upload/'  
+MEDIA_ROOT = 'upload/'
+MEDIA_URL = 'upload/'
 
 
 # Application definition
