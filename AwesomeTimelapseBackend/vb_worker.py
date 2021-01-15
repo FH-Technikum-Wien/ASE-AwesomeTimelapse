@@ -20,16 +20,27 @@ def main():
         os.mkdir(constants.OUTPUT_FOLDER)
 
     # Connect to RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME, port=constants.HOST_PORT))
-    channel = connection.channel()
-    # Create queue for receiving messages. Needs to be the same used by the sender.
-    channel.queue_declare(queue=constants.QUEUE_NAME)
-    print("[*] Waiting for messages.")
+    connect()
+    println("[*] Waiting for messages...")
 
-    # Define from which queue we should receive callbacks
-    channel.basic_consume(queue=constants.QUEUE_NAME, on_message_callback=callback, auto_ack=True)
-    channel.start_consuming()
+def connect():
+    """ connects to the configured RabbitMQ
+    """
+    try:
+        print("[.] connecting to RabbitMQ...")
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME, port=constants.HOST_PORT))
+        channel = connection.channel()
+        # Create queue for receiving messages. Needs to be the same used by the sender.
+        channel.queue_declare(queue=constants.QUEUE_NAME)
 
+        # Define from which queue we should receive callbacks
+        channel.basic_consume(queue=constants.QUEUE_NAME, on_message_callback=callback, auto_ack=True)
+        channel.start_consuming()
+    except:
+        # wait a certain time to try again
+        print("[X] Couldn't connect to RabbitMQ, trying again in 5 seconds...")
+        time.sleep(5)
+        connect()
 
 def callback(ch, method, properties, body):
     # Split received message to image and video ID
@@ -57,15 +68,15 @@ def callback(ch, method, properties, body):
         success = ffmpeg.createVideo(imagePath, outputPath)
 
     if not success:
-        print("[X] Couldn't generate video!\n")
+        print("[X] Couldn't generate video!")
         exit(1)
 
     # Upload video to API
     success = updateVideo(videoFile, videoID, videoName)
 
     if not success:
-        print("[X] Couldn't update file in API!\n")
-        exit(1)    
+        print("[X] Couldn't update file in API!")
+        exit(1)
 
     # Empty temp folders after completion
     shutil.rmtree(constants.TEMP_FOLDER)
@@ -74,13 +85,12 @@ def callback(ch, method, properties, body):
     os.mkdir(constants.VIDEO_FOLDER)
     os.mkdir(constants.OUTPUT_FOLDER)
 
-    print("[->] Completed!\n")
-    print("[*] Waiting for messages...")            
+    print("[->] Completed!")
 
 def downloadImage(imageID):
-    """ Downloads the image with the given ID to the 'temp/images' folder. 
-    Arguments:
-    imageID -- The ID of the image in the API (>0)     
+    """ Downloads the image with the given ID to the 'temp/images' folder.\n
+    Arguments:\n
+    imageID -- The ID of the image in the API (>0)
     """
     # Get image obj from API
     response = requests.get(constants.IMAGE_ADDRESS + imageID)
@@ -93,8 +103,7 @@ def downloadImage(imageID):
 def downloadVideo(videoID):
     """ Downloads the video with the given ID to the 'temp/videos' folder.\n
     Arguments:\n
-    videoID -- The ID of the video in the API (>0)   
-    \n
+    videoID -- The ID of the video in the API (>0)\n
     Returns:\n
     (Bool, videoName) -- Whether a video was downloaded | The videoName of the video instance
     """
