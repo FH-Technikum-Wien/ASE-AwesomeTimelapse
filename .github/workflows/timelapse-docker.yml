@@ -1,4 +1,4 @@
-name: Test Application via Docker Build and Compose
+name: Run Application via Docker Build and Compose
 
 on:
   push:
