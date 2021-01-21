@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-QUEUE_NAME = "worker_queue"
-HOST_NAME = "rabbitmq"
+import os
+
+QUEUE_NAME = os.environ['QUEUE_NAME']
+HOST_NAME = os.environ['QUEUE_IP']
 HOST_PORT = 5672
 REQUEST_SEPARATOR = '-'
 
@@ -10,7 +12,7 @@ IMAGE_FOLDER = "temp/image/"
 VIDEO_FOLDER = "temp/video/"
 OUTPUT_FOLDER = "temp/output/"
 
-API_CONTAINER_NAME = "django"
+API_CONTAINER_NAME = os.environ['REST_IP']
 IMAGE_ADDRESS = f"http://{API_CONTAINER_NAME}:8000/images/"
 VIDEO_ADDRESS = f"http://{API_CONTAINER_NAME}:8000/videos/"
 

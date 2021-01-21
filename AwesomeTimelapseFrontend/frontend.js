@@ -9,10 +9,9 @@ const amqp = require('amqplib/callback_api'); // rabbitmq api
 const app = express();
 const path = __dirname + '/';
 
-// TODO: share constants from backend
-const QUEUE_NAME = "worker_queue"
-const HOST_NAME = "rabbitmq"
-const URL = 'http://django:8000'
+const QUEUE_NAME = process.env.QUEUE_NAME
+const HOST_NAME = process.env.QUEUE_IP
+const URL = 'http://' + process.env.REST_IP + ':8000'
 //const HOST_PORT = 5672
 const TMPFILE = 'upload.png';
 

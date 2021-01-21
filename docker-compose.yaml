@@ -38,6 +38,8 @@ services:
       - api
     links:
       - "rabbitmq:queue"
+    env_file:
+      - project.env
 
   ### QUEUE
   rabbitmq:
@@ -53,6 +55,8 @@ services:
     container_name: videoBuilderWorker
     build: AwesomeTimelapseBackend
     command: python vb_worker.py
+    env_file:
+      - project.env
     depends_on:
       - rabbitmq
       - api
