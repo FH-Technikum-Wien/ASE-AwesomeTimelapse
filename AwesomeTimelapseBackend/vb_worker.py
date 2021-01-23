@@ -21,13 +21,12 @@ def main():
 
     # Connect to RabbitMQ
     connect()
-    println("[*] Waiting for messages...")
 
 def connect():
     """ connects to the configured RabbitMQ
     """
     try:
-        print("[.] connecting to RabbitMQ...")
+        print(f"[.] Connecting to RabbitMQ using hostname: '{constants.HOST_NAME}' and port: '{constants.HOST_PORT}")
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=constants.HOST_NAME, port=constants.HOST_PORT))
         channel = connection.channel()
         # Create queue for receiving messages. Needs to be the same used by the sender.
@@ -35,12 +34,21 @@ def connect():
 
         # Define from which queue we should receive callbacks
         channel.basic_consume(queue=constants.QUEUE_NAME, on_message_callback=callback, auto_ack=True)
+        print("[->] Connected!")
+        print("[*] Waiting for messages...")
         channel.start_consuming()
+    except pika.exceptions.AMQPConnectionError as e: 
+        print(f"[X] Couldn't connect to RabbitMQ: {e}")
+        retryAfterDelay()
     except:
-        # wait a certain time to try again
-        print("[X] Couldn't connect to RabbitMQ, trying again in 5 seconds...")
-        time.sleep(5)
-        connect()
+        print(f"[X] Couldn't connect to RabbitMQ: {sys.exc_info()[0]}")
+        retryAfterDelay()
+        
+def retryAfterDelay():
+    print("Trying again in 5 seconds...")
+    # Wait a certain time to try again
+    time.sleep(5)
+    connect()
 
 def callback(ch, method, properties, body):
     # Split received message to image and video ID
