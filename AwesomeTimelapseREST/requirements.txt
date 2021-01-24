@@ -3,3 +3,4 @@ djangorestframework
 django-filter
 Pillow
 psycopg2-binary
+django-dbconn-retry
